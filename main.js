@@ -6,8 +6,14 @@ function createCards () {
         card.setAttribute('class', 'cards');
         cover.setAttribute('id', 'cover'+[i]);
         cover.setAttribute('class', 'covers');
-        card.addEventListener('mousedown',changeColor);
+        cover.addEventListener('mousedown',changeColor);
         document.getElementById("gameBoard").appendChild(card).appendChild(cover);
+    }
+}
+function changeColor (e) {
+    if(onDeck.length<2 || !onDeck.length){
+    e.target.style.border='7px red solid';
+    onDeck.push(e.target);
     }
 }
 function randomizeImages () {
@@ -38,30 +44,27 @@ function randomizeImages () {
         }
     }
     
-function changeColor () {
-    if(onDeck.length<2 || !onDeck.length){
-    this.firstChild.style.border='7px red solid';
-    onDeck.push(this);
-    }
-}
+
 function play () {
     if(onDeck.length===2){
-        onDeck[0].firstChild.style.opacity=0;
-        onDeck[1].firstChild.style.opacity=0;
+        onDeck[0].style.opacity=0;
+        onDeck[1].style.opacity=0;
         setTimeout(openCover,500);  
     } 
    
 }
 function openCover () {
-    onDeck[0].firstChild.style.border='4px rgb(139, 235, 179) solid';
-    onDeck[1].firstChild.style.border='4px rgb(139, 235, 179) solid';
-    if(onDeck[0].style.backgroundImage===onDeck[1].style.backgroundImage) {
-        onDeck[0].firstChild.style.opacity=0;
-        onDeck[1].firstChild.style.opacity=0;
+    onDeck[0].style.border='4px rgb(139, 235, 179) solid';
+    onDeck[1].style.border='4px rgb(139, 235, 179) solid';
+    if(onDeck[0].parentNode.style.backgroundImage===onDeck[1].parentNode.style.backgroundImage) {
+        onDeck[0].style.opacity=0;
+        onDeck[1].style.opacity=0;
+        onDeck[0].removeEventListener('mousedown',changeColor);
+        onDeck[1].removeEventListener('mousedown',changeColor);
     }
     else{
-        onDeck[0].firstChild.style.opacity=1;
-        onDeck[1].firstChild.style.opacity=1;
+        onDeck[0].style.opacity=1;
+        onDeck[1].style.opacity=1;
     }
     onDeck=[];
 }
