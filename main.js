@@ -6,7 +6,6 @@ function createCards () {
         card.setAttribute('class', 'cards');
         cover.setAttribute('id', 'cover'+[i]);
         cover.setAttribute('class', 'covers');
-        cover.addEventListener('mousedown',changeColor);
         document.getElementById("gameBoard").appendChild(card).appendChild(cover);
     }
 }
@@ -46,11 +45,16 @@ function randomizeImages () {
     
 
 function play () {
-    if(onDeck.length===2){
+    if(onDeck.length===2 && onDeck[0]!==onDeck[1]){
         onDeck[0].style.opacity=0;
         onDeck[1].style.opacity=0;
         setTimeout(openCover,500);  
     } 
+    else if (onDeck.length===2 && onDeck[0]===onDeck[1]) {
+        onDeck.pop();
+    }
+
+
    
 }
 function openCover () {
@@ -74,6 +78,7 @@ var onDeck=[];
 var imageArray=['merkel.jpeg','xi.jpeg','trump.png','pusheen.jpeg','Cruz.jpg','bellucci.jpg'];
 var playButton=document.getElementById('reset');
 playButton.onclick= play;
+document.getElementById("gameBoard").addEventListener('mousedown',changeColor);
 //create divs for gamecard & covers
 createCards();
 randomizeImages();
